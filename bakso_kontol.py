@@ -41,8 +41,6 @@ def ban():
   |  [4] . Restore Folder                     |
   |  [5] . File dan Folder                    |
   |  [6] . Restore File Dan Folder            |
-  |  [7] . Hidden File (Bikin Error)          |
-  |  [8] . Restore Hidden File (Bikin Error)  |
   •===========================================•
 """
     print(banner)
@@ -54,8 +52,6 @@ def ban():
         elif (pilih == 4): res_folder()
         elif (pilih == 5): file_folder()
         elif (pilih == 6): res_file_folder()
-        elif (pilih == 7): haiden_file()
-        elif (pilih == 8): showen_file()
     except ValueError:
         ban()
     except KeyboardInterrupt:
@@ -94,15 +90,6 @@ def help():
   • Restore File dan Folder
     Ini akan menghapus file dan folder yang 
     telah dibuat.
-  
-  • Hidden File ( Membutuhkan Waktu Yang Lama )
-    Ini akan merename folder menjadi hidden ,
-    (berawalan . ) . Cukup lama dalam menjalankan
-    eksekusi ini , tergantung seberapa besar size
-    internal yang di rename.
-
-  • Restore Hidden File
-    Mengembalikan file yang di hiden ke semula.
 
 =================================================
 """
@@ -229,31 +216,5 @@ def res_file_folder():
     system("rm restore/files && touch restore/files")
     input("Enter Untuk Melanjutkan ")
     ban()
-
-def haiden_file():
-    with open(".bakso_kontol","r") as list_sdcard:
-        data = list_sdcard.readlines()
-        for i in data:
-            nama_folder = i.replace("\n","")
-            try: rename(f"/sdcard/{nama_folder}",f"/sdcard/.{nama_folder}")
-            except FileNotFoundError: continue
-            except PermissionError: continue
-            except OSError: continue
-
-def showen_file():
-    with open(".bakso_kontol","r") as list_sdcard:
-        data = list_sdcard.readlines()
-        for i in data:
-            nama_folder = i.replace("\n","")
-            match nama_folder:
-                case "Android": continue
-                case "MIUI": continue
-                case "Fonts": continue
-                case "Movies": continue
-            try: rename(f"/sdcard/.{nama_folder}",f"/sdcard/{nama_folder}")
-            except FileNotFoundError: continue
-            except PermissionError: continue
-            except OSError:continue
-    remove(".bakso_kontol")
 
 ban()
