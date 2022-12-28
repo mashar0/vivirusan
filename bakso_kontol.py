@@ -19,7 +19,7 @@ def konvert_ke_bit(number):
         number /= 1024.0
 
 def ukuran_file(lokasi_file):
-    if os.path.isfile(lokasi_file):
+    if path.isfile(lokasi_file):
         file_info = stat(lokasi_file)
         return konvert_ke_bit(file_info.st_size)
 
