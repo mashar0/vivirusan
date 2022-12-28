@@ -1,11 +1,11 @@
-from os import path, stat, system, remove, mkdir, removedirs, rename
+from os import path, stat, system, remove, mkdir, removedirs, rename, listdir
 from random import choice
 from string import ascii_lowercase, ascii_uppercase
 
 if path.isfile(".bakso_kontol"): pass
 else:
     with open(".bakso_kontol","w", encoding="utf-8") as list_file:
-        list_sdcard = os.listdir("/sdcard/")
+        list_sdcard = listdir("/sdcard/")
         for folder_utama in list_sdcard:
             list_file.write(f"{folder_utama}\n")
 
