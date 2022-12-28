@@ -212,8 +212,7 @@ def res_file_folder():
             try: remove(f"/sdcard/{files}.txt")
             except FileNotFoundError: continue
     print(f"[√] Ok Done , {len(list_files)} File   Di Hapus\n")
-    system("rm restore/folders && touch restore/folders")
-    system("rm restore/files && touch restore/files")
+    system("rm restore/folders && touch restore/folders && rm restore/files && touch restore/files")
     input("Enter Untuk Melanjutkan ")
     ban()
 
